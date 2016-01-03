@@ -330,6 +330,7 @@
 
 
 
+	//todo ace  发送ajax请求
 	$.fn.aceAjax = $.fn.ace_ajax = function (option, value, value2) {
 		var method_call;
 

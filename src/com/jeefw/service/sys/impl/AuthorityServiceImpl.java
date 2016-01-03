@@ -45,16 +45,19 @@ public class AuthorityServiceImpl extends BaseService<Authority> implements Auth
 
 	// 获取多级菜单
 	public List<Authority> queryAllMenuList(String globalRoleKey) {
+		//根据当前用户角色 取出 当前角色 的 所有的 有权的权限
 		List<RoleAuthority> roleAuthorityList = roleAuthorityDao.queryByProerties("roleKey", globalRoleKey);
 		List<String> menuCodeList = new ArrayList<String>();
 		for (int j = 0; j < roleAuthorityList.size(); j++) {
-			menuCodeList.add(roleAuthorityList.get(j).getMenuCode());
+			menuCodeList.add(roleAuthorityList.get(j).getMenuCode());//菜单编码
 		}
 
 		Map<String, String> sortedCondition = new HashMap<String, String>();
 		sortedCondition.put("sequence", "ASC");
+		//取所有的 主菜单项
 		List<Authority> mainMenuList = authorityDao.queryByProerties("parentMenuCode", "0", sortedCondition);
 
+		//所有菜单
 		List<Authority> allAuthority = authorityDao.doQueryAll();
 		Set<String> parentMenuCodeSet = new HashSet<String>();
 		for (int i = 0; i < allAuthority.size(); i++) {
